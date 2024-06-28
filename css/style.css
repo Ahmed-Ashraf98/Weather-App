@@ -1,0 +1,18 @@
+/** =================== Fonts Setting ======================*/
+@font-face{
+    font-family: Poppins;
+    src: url("../webfonts/Poppins/Poppins-Light.ttf");
+    font-weight: 100;   
+}
+
+/** ==================== Global ========================  */
+
+:root{
+    --main-font : Poppins;
+}
+
+/** =================== General Setting ======================*/
+
+body{
+    font-family: var(--main-font);
+}
