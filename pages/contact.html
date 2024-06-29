@@ -1,108 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/all.min.css" />
     <link rel="stylesheet" href="../css/style.css" />
-  </head>
+</head>
 
-  <body class="vh-100">
+<body class="vh-100">
 
     <nav class="navbar navbar-expand-lg py-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Weather</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fa-solid fa-bars fs-5 text-white"></i>
-        </button>
-        <div class="collapse navbar-collapse mt-4 mt-lg-0" id="navbarSupportedContent">
-          <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-            <li class="nav-item me-2">
-              <a class="nav-link active px-3" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item me-2">
-              <a class="nav-link px-3" href="#">News</a>
-            </li>
-            <li class="nav-item me-2">
-              <a class="nav-link px-3" href="#">Live cameras</a>
-            </li>
-            <li class="nav-item me-2">
-              <a class="nav-link px-3" href="#">Photos</a>
-            </li>
-            <li class="nav-item me-2">
-              <a class="nav-link px-3" href="./pages/contact.html">Contact</a>
-            </li>
-          </ul>
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../images/weather-logo.png" alt="Logo" class="d-inline-block w-25">
+                Weather
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars fs-5 text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse mt-4 mt-lg-0" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+                    <li class="nav-item me-2">
+                        <a class="nav-link px-3" aria-current="page" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link px-3" href="#">News</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link px-3" href="#">Live cameras</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link px-3" href="#">Photos</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link active px-3" href="./pages/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
 
     <main>
-      <section class="nav-pages-bar my-3">
-        <div class="container">
-            <div class="pages-bar text-white p-3 rounded rounded-pill">
-                <span><a class="text-decoration-none text-white px-3 pe-1" href="../index.html">Home</a></span>
-                <i class="fa-solid fa-arrow-right px-1"></i> <span>Contact Us</span>
-            </div>
-        </div>
-      
-      </section>
-      <section class="contact-us">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    
+        <section class="nav-pages-bar my-3">
+            <div class="container">
+                <div class="pages-bar text-white p-3 rounded rounded-pill">
+                    <a class="text-decoration-none text-white px-3 pe-1 position-relative" href="../index.html">
+                        Home
+                    </a>
+                    <i class="fa-solid fa-arrow-right px-1"></i> <span>Contact Us</span>
                 </div>
-                <div class="col-md-6">
+            </div>
 
+        </section>
+        <section class="contact-us text-white my-5">
+            <div class="container">
+                <div class="row gx-2 gx-md-5">
+                    <div class="col-md-6">
+                        <div class="location-section overflow-hidden rounded rounded-2">
+
+                            <div class="location-map">
+                                <iframe class="d-block mx-auto rounded-top-3 w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3411.0497174635793!2d29.97450007539436!3d31.247046974340297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5db8a16c3c77d%3A0x24c465e134255814!2sRoute%20IT%20Training%20Center!5e0!3m2!1sen!2seg!4v1719674651604!5m2!1sen!2seg" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+
+                            <div class="location-data mt-3 p-3">
+                                <p>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    Company Name INC.2803 Avenue Street, Los Angeles
+                                </p>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a class="text-decoration-none text-white" href="">
+                                            <i class="fa-solid fa-phone"></i> <span>+1 800 314 235</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="text-decoration-none text-white" href="">
+                                            <i class="fa-solid fa-envelope"></i> <span>contact@companyname.com</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="contact-us-form-section">
+                            <h2>Contact us</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consectetur inventore
+                                ducimus, facilis, numquam id soluta omnis eius recusandae nesciunt vero repellat harum
+                                cum. Nisi facilis odit hic, ipsum sed!
+                            </p>
+                            <form id="contact-form" class="mt-4">
+                                <div class="group-one mb-2">
+                                    <div class="row gy-1">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="name"
+                                                    placeholder="Your Name...">
+                                                <label for="name">Your Name...</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="email"
+                                                    placeholder="Email Address">
+                                                <label for="email">Email Address...</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group-two mb-2">
+                                    <div class="row gy-1">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="compName"
+                                                    placeholder="Company Name...">
+                                                <label for="compName">Company Name</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="url" class="form-control" id="website"
+                                                    placeholder="The Website">
+                                                <label for="website">Website...</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-2">
+                                    <textarea class="form-control" placeholder="Leave a message here" id="message"
+                                        style="height: 100px"></textarea>
+                                    <label for="message">Message...</label>
+                                </div>
+                                <button type="submit"
+                                    class="d-block mb-2 ms-auto btn btn-info text-white">Submit</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-      </section>
+        </section>
     </main>
 
     <footer class="footer">
-      <div class="container py-5 px-2">
-        <div class="contact-section">
-          <div class="row gx-0 gx-sm-4">
-            <div class="col-md-6">
-              <div class="input-wrapper position-relative mb-3">
-                <input class="form-control py-3 rounded rounded-5" type="text" id="searchLocation" placeholder="Enter Your Email To Subscribe">
-                <button class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Subscribe</button>  
-              </div>
+        <div class="container py-5 px-2">
+            <div class="contact-section">
+                <div class="row gx-0 gx-sm-4">
+                    <div class="col-md-6">
+                        <div class="form-floating input-wrapper position-relative mb-3">
+
+                            <input type="email" class="form-control py-3 rounded rounded-5" id="searchLocation" placeholder="Enter Your Email To Subscribe">
+                            <label for="searchLocation">Enter Your Email To Subscribe</label>
+
+                            <button
+                                class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Subscribe</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <ul
+                            class="m-0 list-unstyled social-media d-flex justify-content-center align-items-center flex-wrap">
+                            <li class="me-2">
+                                <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f"></i></a>
+                            </li>
+                            <li class="me-2">
+                                <a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a>
+                            </li>
+                            <li class="me-2">
+                                <a href="https://plus.google.com"><i class="fa-brands fa-google-plus-g"></i></a>
+                            </li>
+                            <li class="me-2">
+                                <a href="https://www.pinterest.com/"><i class="fa-brands fa-pinterest"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="col-md-6">
-              <ul class="m-0 list-unstyled social-media d-flex justify-content-center align-items-center flex-wrap">
-                <li class="me-2">
-                  <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f"></i></a>
-                </li>
-                <li class="me-2">
-                  <a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a>
-                </li>
-                <li class="me-2">
-                  <a href="https://plus.google.com"><i class="fa-brands fa-google-plus-g"></i></a>
-                </li>
-                <li class="me-2">
-                  <a href="https://www.pinterest.com/"><i class="fa-brands fa-pinterest"></i></a>
-                </li>
-              </ul>
+
+
+            <div class="copyright text-white pt-3">
+                <p>Copyright 2024 Route. Designed by Ahmed Ashraf. All rights reserved</p>
             </div>
-          </div>
-          
-         
         </div>
-       
-      
-      <div class="copyright text-white pt-3">
-        <p>Copyright 2024 Route. Designed by Ahmed Ashraf. All rights reserved</p>
-      </div>
-    </div>
     </footer>
 
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
-  </body>
+</body>
+
 </html>
