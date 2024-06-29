@@ -9,10 +9,141 @@
 
 :root{
     --main-font : Poppins;
+    --main-bg-color:#1e202b;
+    --secondary-bg-color : #262936;
+    --main-color:#009ad8;
+    --main-font-color:#fff;
+    --main-nav-active-color:#009ad8;
+    --main-nav-hover-color:#009ad8;
+    --main-nav-hover-color-rgb: 0, 154, 216;
 }
 
 /** =================== General Setting ======================*/
 
+*{
+    word-break: break-all;
+}
+
 body{
     font-family: var(--main-font);
+    background: var(--main-bg-color);
+}
+
+input[type="text"]{
+    color: var(--main-font-color);
+    background: #1e202b;
+}
+
+.form-control:focus {
+    color: var(--main-font-color);
+    background-color: var(--main-bg-color);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+}
+
+/* * ========================= Navbar ========================= */
+
+.navbar-nav {
+    --bs-nav-link-color: var(--bs-navbar-color);
+    --bs-nav-link-hover-color: var(--main-nav-hover-color);
+}
+
+.navbar-brand:focus, .navbar-brand:hover {
+    color: var(--main-font-color);
+}
+
+.navbar a{
+    color: var(--main-font-color);
+}
+
+.navbar-nav li a{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 10px;
+    transition: all 0.3s;
+    border:2px solid transparent;
+}
+
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+    color: var(--main-nav-hover-color);
+    border-color:var(--main-nav-hover-color);
+}
+
+.nav-link:focus{
+    color: var(--main-font-color);
+}
+.nav-link:hover {
+    color: var(--main-nav-hover-color);
+    border-color:var(--main-nav-hover-color);
+}
+.navbar {
+    --bs-navbar-toggler-icon-bg:unset;
+    --bs-navbar-toggler-border-radius: 1rem;
+}
+.navbar-toggler {
+    padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
+    font-size: var(--bs-navbar-toggler-font-size);
+    line-height: 1;
+    color: var(--bs-navbar-color);
+    background-color: transparent;
+    border: var(--bs-border-width) solid var(--main-nav-hover-color);
+    border-radius: var(--bs-navbar-toggler-border-radius);
+    transition: var(--bs-navbar-toggler-transition);
+}
+
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: 0 0 0px var(--bs-navbar-toggler-focus-width) #88d1ff;
+}
+
+
+/** ==========================   =======================================*/
+
+.search-section{
+    background: linear-gradient(346deg, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.3) 0%), url("../images/city.jpg");
+    min-height: 400px;
+    background-size: cover;
+}
+
+.weather-wrapper{
+    position: relative;
+    top: -150px;
+}
+
+/** ========================= Footer ===================================== */
+
+.footer{
+    background: var(--secondary-bg-color);
+}
+
+.social-media{
+    & a{
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        color:var(--main-color);
+        background: #1e202b;
+        border-radius: 50%;
+        text-align: center;
+        transition: all 0.3s;
+        & i{
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        &:hover{
+            color:var(--main-font-color);
+            background-color:var(--main-color);
+        }
+    }
+}
+
+
+
+/*? >>>>>>>>>>>>>>>>>>>>>>   Contact US Page Style <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  */
+
+.nav-pages-bar .pages-bar{
+    background-color: var(--secondary-bg-color);
 }

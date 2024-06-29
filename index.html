@@ -9,51 +9,160 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
-  <body>
+  <body class="vh-100">
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg py-4">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">Weather</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <i class="fa-solid fa-bars fs-5 text-white"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <div class="collapse navbar-collapse mt-4 mt-lg-0" id="navbarSupportedContent">
+          <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+            <li class="nav-item me-2">
+              <a class="nav-link active px-3" aria-current="page" href="#">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="#">News</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="#">Live cameras</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="#">Photos</a>
+            </li>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="./pages/contact.html">Contact</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
         </div>
       </div>
     </nav>
 
+
     <main>
-      <section></section>
+      <section id="weather-section" class="py-5">
+        
+        <div class="container-fluid search-section py-5">
+          <form id="searchForm" class="w-50 mx-auto">
+            <!-- TODO : apply prevent default -->
+            <div class="input-wrapper position-relative mb-3">
+              <input class="form-control py-3 rounded rounded-5" type="text" id="searchLocation" placeholder="Search for location">
+              <button class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Find</button>  
+            </div>
+          </form> 
+        </div>
+          <div class="weather-wrapper">
+            <div class="container">   
+            <div id="todayWeather" class="bg-secondary rounded rounded-2">
+              <div class="weather-card container">
+                <div class="card-header mb-4 p-2 d-flex justify-content-between flex-wrap">
+                  <h2 class="">Today Weather</h2>
+                  
+                  <button class="btn btn-primary">To F</button>
+                  
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <h5>City Name</h5>
+                      <p>Day Name</p>
+                      <p>Date</p>
+                    </div>
+                    <div class="col-md-4">
+                      <i>icon</i>
+                      <span>Degree</span>
+                      <p>status</p>
+                    </div>
+                    <div class="col-md-4">
+                      <ul class="list-unstyled">
+                        <li>
+                          <i>icon</i> <span>Humidity</span><span>73%</span>
+                        </li>
+                        <li>
+                          <i>icon</i> <span>Wind</span><span>180 kph</span>
+                        </li>
+                        <li>
+                          <i>icon</i> <span>Pressure</span><span>1014 hpa</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="future-wheather mt-5">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="weather-card bg-dark-subtle text-center">
+                    <div class="card-header">
+                      <h3>Day Name</h3>
+                    </div>
+                    <div class="card-body">
+                      <i>icon</i>
+                      <h4>Max value</h4>
+                      <p>Mini value</p>
+                      <p>Status</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="weather-card bg-dark-subtle text-center">
+                    <div class="card-header">
+                      <h3>Day Name</h3>
+                    </div>
+                    <div class="card-body">
+                      <i>icon</i>
+                      <h4>Max value</h4>
+                      <p>Mini value</p>
+                      <p>Status</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <footer>
+    <footer class="footer">
+      <div class="container py-5 px-2">
+        <div class="contact-section">
+          <div class="row gx-0 gx-sm-4">
+            <div class="col-md-6">
+              <div class="input-wrapper position-relative mb-3">
+                <input class="form-control py-3 rounded rounded-5" type="text" id="searchLocation" placeholder="Enter Your Email To Subscribe">
+                <button class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Subscribe</button>  
+              </div>
+            </div>
+            <div class="col-md-6">
+              <ul class="m-0 list-unstyled social-media d-flex justify-content-center align-items-center flex-wrap">
+                <li class="me-2">
+                  <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f"></i></a>
+                </li>
+                <li class="me-2">
+                  <a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a>
+                </li>
+                <li class="me-2">
+                  <a href="https://plus.google.com"><i class="fa-brands fa-google-plus-g"></i></a>
+                </li>
+                <li class="me-2">
+                  <a href="https://www.pinterest.com/"><i class="fa-brands fa-pinterest"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+         
+        </div>
+       
       
+      <div class="copyright text-white pt-3">
+        <p>Copyright 2024 Route. Designed by Ahmed Ashraf. All rights reserved</p>
+      </div>
+    </div>
     </footer>
 
     <script src="js/bootstrap.bundle.min.js"></script>
