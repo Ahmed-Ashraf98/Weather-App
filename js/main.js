@@ -36,7 +36,7 @@ const compassDirs =
   "NW": "North West",
   "NNW": "North North West"
 };
-const baseURL = "http://api.weatherapi.com/v1";
+const baseURL = "https://api.weatherapi.com/v1";
 const apiKey = "7f210e0cb05c46f3a26181416242906";
 let currentDate =  new Date();
 let currentLatitude;
