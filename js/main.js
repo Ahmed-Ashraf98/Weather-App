@@ -46,40 +46,46 @@ let locationAccessAllowed = false;
 
 // & >>>>>>>>>>>>>>>>>> Start App Scenario <<<<<<<<<<<<<<<<
 /*
-- Once app start, ask user to confirm for sharing the location
+- Once app start, ask user to confirm about sharing the location
 - If user reject the location share, then show cairo weather as default location
 - If user accepts, then dispaly the current location weather of the user
-- Display the today & next two days of the current location
+- Display the today & next two days of the location
 */
 
 // & >>>>>>>>>>>>>>>>>> User Search Scenario <<<<<<<<<<<<<<<<
 /*
-- When user is trying to search for location, then run the searchByName function
-- If no city founded, then don't update the document
-- If founded, get first city matches keywords enterd by user
+- When user is trying to search for location, then run the searchByName function [ Only if input is not empty ]
+- If is no city found, then don't update the document
+- If city found, get first city taht match the keywords enterd by user
 - Search function will return the city id and pass it to forcast method
 - Display the weather of the searched city
 */
 
 // * ============================== [ Tools ] ==================================
 
-let getMonthName = (date) => monthsList[date.getMonth()]; // get month name of a given date
-let getDayName = (date) => daysList[date.getDay()]; // get day name of a given date
-let cityIdIsValid = (cid) => cid != undefined; // this to check if the searchForLocationByName method returned an id or not
-let cityObjValid = (cObj) => cObj != undefined; // this to check if the method [ searchForLocationByName , ] returned an object or undefined
+let getMonthName = (date) => monthsList[date.getMonth()]; // get the month name of a given date
+let getDayName = (date) => daysList[date.getDay()]; // get the  day name of a given date
+let cityIdIsValid = (cid) => cid != undefined; // this function to check if the searchForLocationByName function has returned an id or not [undefined]
+let cityObjValid = (cObj) => cObj != undefined; // this function to check if the API functions has returned an object or not [undefined]
 
 // * ===================== [ Start Of The App ] =======================
 
 
 (async function() {
+    
+    // 1- run the loading until getting the weather data
     showLoader();
-    let cityObj =  await getFullWeatherDataByName(defaultLocation);
+
+    // 2- get the default weather [ in our case, cairo weather until we receive the acceptance or rejection from user side about sharing his current location ]
+    let cityObj =  await getFullWeatherDataByName(defaultLocation); 
     
     if(cityObjValid(cityObj)){
         dispalyTodayAndFutureWX(cityObj);
     }
 
+
     if(navigator.geolocation){
+        // if user accepts the location share, then get the current user location weather 
         navigator.geolocation.getCurrentPosition(onSuccessGeoLocation);
     }else{
         console.log("Geolocation is not supported by this browser.");
@@ -88,13 +94,29 @@ let cityObjValid = (cObj) => cObj != undefined; // this to check if the method [
 })();
 
 async function onSuccessGeoLocation(position){
+    
+    // The function will:
+
+    /* 
+     --> Get the weather deatils for the given city id
+     --> This function returns the today and the next num Of Days weather
+     --> If the numOfDays is 3, this means today and next 2 days
+
+        ( Params ) => [ position : the user position from GeoLocation API ]
+        ( return ) => ** This function will not return anything **
+    */ 
+
     currentLatitude = position.coords.latitude;
     currentLongitude = position.coords.longitude;
-    locationAccessAllowed = true;
+
+    // mark that user is accepting the location share [we will need it in the search input logic later]
+    locationAccessAllowed = true; 
+
+    // try to get the weather details based on the latitude & longitude
     let cityObj = await getWeatherByLatAndLon(currentLatitude,currentLatitude);
-    hideLoader();
-    if(cityObjValid(cityObj)){
-        dispalyTodayAndFutureWX(cityObj);
+    hideLoader(); 
+    if(cityObjValid(cityObj)){ // if object is valid then display the data
+        dispalyTodayAndFutureWX(cityObj); // update the home page with the weather data
     }
     
 }
@@ -104,9 +126,16 @@ async function onSuccessGeoLocation(position){
 
 
 async function searchForLocationByName(cityName){
+    
+    // This function will:
     /* 
-     - search for city by the given name using search endpoint 
-     - return the id if city founded otherwise return undefined
+     --> Search for city by the given name using search endpoint 
+     --> Return the id if city founded otherwise return undefined
+        
+        ( Params ) => [ cityName : the city name that you want to search for its weather, for example "cairo" ]
+        ( return ) => 
+            * In case the city found by search API, then we will return the city id [ the id of the first match ]
+            * In case the city is < not > found by search API < or > the search API response is not OK, we will return undefined !!
     */
     
     let cityId;
@@ -115,9 +144,9 @@ async function searchForLocationByName(cityName){
     let url = `${baseURL}/${endpoint}?key=${apiKey}&${queryParams}`;
     let response = await fetch(url);
     
-    if (!response.ok) {
+    if (!response.ok) { // if response is not OK, then show the error in the console & exit from function
         console.log(`Response status: ${response.statusText}`);
-        return;
+        return; // exit from function
     }
 
     let cititesList = await response.json();
@@ -131,18 +160,36 @@ async function searchForLocationByName(cityName){
 }
 
 async function getWeatherByLatAndLon(lat,lon,numOfDays=3){
-    // get the weather deatils for the given latitude & longitude
-    // this function returns the today and the next num Of Days weather
-    // if the numOfDays is 3, this means today and next 2 days 
+
+    // The function will:
+
+    /* 
+     --> Get the weather deatils for the given latitude & longitude
+     --> This function will be called only when user accepts the location share from the browser
+     --> This function returns the today and the next num Of Days weather
+     --> If the numOfDays is 3, this means today and next 2 days
+
+
+        ( Params ) =>
+            - [ lat : the latitude "from GeoLocation API"]
+            - [ lon : the longitude "from GeoLocation API"]
+            - [ numOfDays : The number of days that you want to get the weather details for ]
+        ( return ) => 
+            * If API called successfully, then we will return the city object contains the current day and next 2 days ( total 3 days ) 
+            * In case API call fail, then we will return undefined !!
+    */ 
+
+
     let endpoint = "forecast.json";
     let queryParams = `q=${lat},${lon}&days=${numOfDays}`;
     let url = `${baseURL}/${endpoint}?key=${apiKey}&${queryParams}`;
 
     let response = await fetch(url);
     
-    if (!response.ok) { 
+    if (!response.ok) { // if response is not OK, then show the error in the console & exit from function
         console.log(`Response status: ${response.statusText}`);
-        return; //TODO:  if response from API not OK, don't procced and exit 
+        return; // exit from function
+        //TODO:  if response from API not OK, don't procced and exit 
     }
 
     let cityObj =await response.json();
@@ -151,9 +198,21 @@ async function getWeatherByLatAndLon(lat,lon,numOfDays=3){
 
 async function getWeatherByCityId(cid,numOfDays=3){
     
-    // get the weather deatils for the given city id
-    // this function returns the today and the next num Of Days weather
-    // if the numOfDays is 3, this means today and next 2 days
+    // The function will:
+
+    /* 
+     --> Get the weather deatils for the given city id
+     --> This function returns the today and the next num Of Days weather
+     --> If the numOfDays is 3, this means today and next 2 days
+
+        ( Params ) =>
+            - [ cid : the city id ]
+            - [ numOfDays : The number of days that you want to get the weather details for ]
+        ( return ) => 
+            * If API called successfully, then we will return the city object contains the current day and next 2 days ( total 3 days ) 
+            * In case API call fail, then we will return undefined !!
+        
+    */ 
 
     let endpoint = "forecast.json";
     let queryParams = `q=id:${cid}&days=${numOfDays}`;
@@ -161,9 +220,10 @@ async function getWeatherByCityId(cid,numOfDays=3){
 
     let response = await fetch(url);
     
-    if (!response.ok) {
+    if (!response.ok) { // if response is not OK, then show the error in the console & exit from function
         console.log(`Response status: ${response.statusText}`);
-        return; //TODO:  if response from API not OK, don't procced and exit 
+        return; // exit from function 
+        //TODO:  if response from API not OK, don't procced and exit 
     }
     
     let cityObj =await response.json();
@@ -175,16 +235,34 @@ async function getWeatherByCityId(cid,numOfDays=3){
 
 async function getFullWeatherDataByName(searchVal){
     
+    // The goal of this function is :
+
+    /*
+        - Compine the searchForLocationByName and getWeatherByCityId in single method for simplifying the code
+        - This will reduce the lines of code since these two methods are called many times in different functions in this app
+    
+        ( Params ) =>
+            - [ searchVal : the search keywords entered by the user ]
+        ( return ) => 
+            * In case the city found by search API, then we will pass the city id to the getWeatherByCityId function
+            * In case the city is < not > found by search API < or > the search API response is not OK, we will return undefined !!
+            * In getWeatherByCityId function, If API called successfully, then we will return the city object contains the current day and next 2 days ( total 3 days ) 
+            * In getWeatherByCityId function, If API call fail, then we will return undefined !!
+        
+    
+    */
+
     let cityId = await searchForLocationByName(searchVal);
     if(!cityIdIsValid(cityId)){
         console.log("The id is undefined", cityId)
         return;
     }
     let cityObj = await getWeatherByCityId(cityId);
+
     return cityObj;
 }
 
-async function getWeatherFromInput(inputVal){
+async function searchHandler(inputVal){
 
     let cityObj;
    // - In case the search input is empty, display the current city in case geo location is enabled [ Location Access Allowed ]
@@ -311,9 +389,12 @@ function dispalyFutureDaysWX(cityObj){
     let htmlBox = ``;
 
     for (let i = 1; i < forcastDaysList.length; i++) { // next 2 days 
-         // today index in forcast object is 0, so we need to start from 1
-         //  we start from index one to skip today in forcast object 
          
+        // --------------- <<<<<<<< IMPORTANT >>>>>> -------------------------
+        // Today object index in forcast object is 0, so we need to start from 1
+        // We start from index [1] to skip today object in the forcast object 
+        // --------------------------------------------------------------------
+
          let forcastObj = forcastDaysList[i];
          let dayObj = forcastObj.day;
          let date = new Date(forcastObj.date);
@@ -384,16 +465,16 @@ function hideLoader(){
 
 searchForm.addEventListener("submit",async function(event){
     event.preventDefault(); // disable default behaviour of form submit
-    let cityObj = await getWeatherFromInput(searchInput.value);
-    if(cityIdIsValid(cityObj)){
-        dispalyTodayAndFutureWX(cityObj);
+    let cityObj = await searchHandler(searchInput.value); // determine which method we call to get the weather data
+    if(cityIdIsValid(cityObj)){ // check if the returned object is valid ( not undefined )
+        dispalyTodayAndFutureWX(cityObj); // update the home page with the weather data
     }
 });
 
 searchInput.addEventListener("input",async function(){
-    let cityObj = await getWeatherFromInput(this.value);
-    if(cityIdIsValid(cityObj)){
-        dispalyTodayAndFutureWX(cityObj);
+    let cityObj = await searchHandler(this.value); // determine which method we call to get the weather data
+    if(cityIdIsValid(cityObj)){ // check if the returned object is valid ( not undefined )
+        dispalyTodayAndFutureWX(cityObj); // update the home page with the weather data
     }
 });
 
