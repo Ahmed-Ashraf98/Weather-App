@@ -17,10 +17,31 @@
           <img src="../images/weather-logo.png" alt="Logo" class="d-inline-block w-25">
           Weather
       </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button id="togglerBtn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collabseNavbar" aria-controls="collabseNavbar" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fa-solid fa-bars fs-5 text-white"></i>
         </button>
-        <div class="collapse navbar-collapse mt-4 mt-lg-0" id="navbarSupportedContent">
+
+        <div class="collapse navbar-collapse mt-4 mt-lg-0" id="collabseNavbar">
+          <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+            <li class="nav-item me-2">
+              <a class="nav-link active px-3" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="#">News</a>
+            </li>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="#">Live cameras</a>
+            </li>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="#">Photos</a>
+            </li>
+            <li class="nav-item me-2">
+              <a class="nav-link px-3" href="./pages/contact.html">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-4 mt-lg-0 d-none d-lg-block" id="mainNavMenu">
           <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
             <li class="nav-item me-2">
               <a class="nav-link active px-3" aria-current="page" href="#">Home</a>
@@ -42,7 +63,7 @@
       </div>
     </nav>
 
-
+ 
     <main>
       <!-- ? “WX” is simply an abbreviation for the word “weather”  -->
       <section id="weather-section" class="py-5">
@@ -55,9 +76,12 @@
             </div>
           </form> 
         </div>
-          <div class="weather-wrapper">
+          <div id="weatherWrapper" class="weather-wrapper">
             <div class="container">   
-            <div id="todayWeather" class="rounded rounded-2 card-bg-light">
+
+            <span id="loader" class="loader position-absolute top-50 start-50"></span>
+
+            <div id="todayWeather" class="rounded rounded-2 card-bg-light shadow-lg">
               
               <div id="todayWxCard">
                 <div id="todayWxCardHeader" class="rounded rounded-2 card-header-bg-light mb-2 pt-2 px-3 d-flex justify-content-between flex-wrap">
@@ -78,6 +102,8 @@
         </div>
       </section>
     </main>
+
+    
 
     <footer class="footer">
       <div class="container py-5 px-2">
@@ -118,5 +144,6 @@
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/nav.js"></script>
   </body>
 </html>

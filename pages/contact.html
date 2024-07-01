@@ -14,36 +14,55 @@
 
     <nav class="navbar navbar-expand-lg py-4">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="../images/weather-logo.png" alt="Logo" class="d-inline-block w-25">
-                Weather
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars fs-5 text-white"></i>
-            </button>
-            <div class="collapse navbar-collapse mt-4 mt-lg-0" id="navbarSupportedContent">
-                <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-                    <li class="nav-item me-2">
-                        <a class="nav-link px-3" aria-current="page" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link px-3" href="#">News</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link px-3" href="#">Live cameras</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link px-3" href="#">Photos</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link active px-3" href="./pages/contact.html">Contact</a>
-                    </li>
-                </ul>
-            </div>
+          <a class="navbar-brand" href="#">
+            <img src="../images/weather-logo.png" alt="Logo" class="d-inline-block w-25">
+            Weather
+        </a>
+          <button id="togglerBtn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collabseNavbar" aria-controls="collabseNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars fs-5 text-white"></i>
+          </button>
+  
+          <div class="collapse navbar-collapse mt-4 mt-lg-0" id="collabseNavbar">
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+              <li class="nav-item me-2">
+                <a class="nav-link px-3" aria-current="page" href="../index.html">Home</a>
+              </li>
+              <li class="nav-item me-2">
+                <a class="nav-link px-3" href="#">News</a>
+              </li>
+              <li class="nav-item me-2">
+                <a class="nav-link px-3" href="#">Live cameras</a>
+              </li>
+              <li class="nav-item me-2">
+                <a class="nav-link px-3" href="#">Photos</a>
+              </li>
+              <li class="nav-item me-2">
+                <a class="nav-link px-3 active" href="#">Contact</a>
+              </li>
+            </ul>
+          </div>
+  
+          <div class="mt-4 mt-lg-0 d-none d-lg-block" id="mainNavMenu">
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+                <li class="nav-item me-2">
+                  <a class="nav-link px-3" aria-current="page" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item me-2">
+                  <a class="nav-link px-3" href="#">News</a>
+                </li>
+                <li class="nav-item me-2">
+                  <a class="nav-link px-3" href="#">Live cameras</a>
+                </li>
+                <li class="nav-item me-2">
+                  <a class="nav-link px-3" href="#">Photos</a>
+                </li>
+                <li class="nav-item me-2">
+                  <a class="nav-link px-3 active" href="#">Contact</a>
+                </li>
+              </ul>
+          </div>
         </div>
-    </nav>
+      </nav>
 
 
     <main>
@@ -191,7 +210,7 @@
     </footer>
 
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../js/nav.js"></script>
 </body>
 
 </html>

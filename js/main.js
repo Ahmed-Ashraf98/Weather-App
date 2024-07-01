@@ -5,14 +5,18 @@
 const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchLocation");
 const findBtn = document.getElementById("findBtn");
+const todayWeather = document.getElementById("todayWeather");
 const todayWxCardHeader = document.getElementById("todayWxCardHeader");
 const todayWxCardBody = document.getElementById("todayWxCardBody");
 const futureDaysWx = document.getElementById("futureDaysWx");
+const loader = document.getElementById("loader");
+const togglerBtn =document.getElementById("togglerBtn");
+const collabseNavbar = document.getElementById("collabseNavbar");
 
 // * =================== General Settings ==================
-
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const defaultLocation = "cairo";
+const monthsList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+const daysList = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const compassDirs = 
 {
   "E": "East",
@@ -37,9 +41,8 @@ const apiKey = "7f210e0cb05c46f3a26181416242906";
 let currentDate =  new Date();
 let currentLatitude;
 let currentLongitude;
+let locationAccessAllowed = false;
 
-let getMonthName = (date) => months[date.getMonth()]; // get month name of a given date
-let getDayName = (date) => days[date.getDay()]; // get day name of a given date
 
 // & >>>>>>>>>>>>>>>>>> Start App Scenario <<<<<<<<<<<<<<<<
 /*
@@ -58,12 +61,23 @@ let getDayName = (date) => days[date.getDay()]; // get day name of a given date
 - Display the weather of the searched city
 */
 
-// * ================================= Start Of The App =======================
+// * ============================== [ Tools ] ==================================
+
+let getMonthName = (date) => monthsList[date.getMonth()]; // get month name of a given date
+let getDayName = (date) => daysList[date.getDay()]; // get day name of a given date
+let cityIdIsValid = (cid) => cid != undefined; // this to check if the searchForLocationByName method returned an id or not
+let cityObjValid = (cObj) => cObj != undefined; // this to check if the method [ searchForLocationByName , ] returned an object or undefined
+
+// * ===================== [ Start Of The App ] =======================
 
 
 (async function() {
-
-    await displayTodayAndFutureWX("cairo");
+    showLoader();
+    let cityObj =  await getFullWeatherDataByName(defaultLocation);
+    
+    if(cityObjValid(cityObj)){
+        dispalyTodayAndFutureWX(cityObj);
+    }
 
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(onSuccessGeoLocation);
@@ -73,14 +87,20 @@ let getDayName = (date) => days[date.getDay()]; // get day name of a given date
 
 })();
 
-//  * ===========================================================================
-
 async function onSuccessGeoLocation(position){
     currentLatitude = position.coords.latitude;
     currentLongitude = position.coords.longitude;
+    locationAccessAllowed = true;
     let cityObj = await getWeatherByLatAndLon(currentLatitude,currentLatitude);
-    displayTodayAndFutureWX(null,cityObj);
+    hideLoader();
+    if(cityObjValid(cityObj)){
+        dispalyTodayAndFutureWX(cityObj);
+    }
+    
 }
+
+
+//  * ============================== [ API Methods ] ==========================================
 
 
 async function searchForLocationByName(cityName){
@@ -96,13 +116,17 @@ async function searchForLocationByName(cityName){
     let response = await fetch(url);
     
     if (!response.ok) {
-        console.log(`Response status: ${response.status}`);
+        console.log(`Response status: ${response.statusText}`);
         return;
     }
+
     let cititesList = await response.json();
-    if(cititesList.length > 0){ // there are one or more city contains the search keywords
-        cityId = cititesList[0].id;
+
+    if(cititesList.length > 0){ // there are one or more city match the search keywords
+        cityId = cititesList[0].id; // take first city from the list that match the search keywords
+        showLoader(); // start loading until retrieving the full data from getWeatherByCityId function
     }
+
     return cityId;
 }
 
@@ -116,18 +140,21 @@ async function getWeatherByLatAndLon(lat,lon,numOfDays=3){
 
     let response = await fetch(url);
     
-    if (!response.ok) {
-        return; // don't procced 
+    if (!response.ok) { 
+        console.log(`Response status: ${response.statusText}`);
+        return; //TODO:  if response from API not OK, don't procced and exit 
     }
-    
+
     let cityObj =await response.json();
     return cityObj;   
 }
 
 async function getWeatherByCityId(cid,numOfDays=3){
+    
     // get the weather deatils for the given city id
-     // this function returns the today and the next num Of Days weather
-    // if the numOfDays is 3, this means today and next 2 days 
+    // this function returns the today and the next num Of Days weather
+    // if the numOfDays is 3, this means today and next 2 days
+
     let endpoint = "forecast.json";
     let queryParams = `q=id:${cid}&days=${numOfDays}`;
     let url = `${baseURL}/${endpoint}?key=${apiKey}&${queryParams}`;
@@ -135,21 +162,51 @@ async function getWeatherByCityId(cid,numOfDays=3){
     let response = await fetch(url);
     
     if (!response.ok) {
-        return; // don't procced 
+        console.log(`Response status: ${response.statusText}`);
+        return; //TODO:  if response from API not OK, don't procced and exit 
     }
     
     let cityObj =await response.json();
     return cityObj;   
 }
 
-async function displayTodayAndFutureWX( searchVal = null,cityData = undefined){
-    let cityObj;
-    if(cityData){
-       cityObj = cityData;
-    }else{
-        let cityId = await searchForLocationByName(searchVal);
-        cityObj = await getWeatherByCityId(cityId);
+
+// * =================== [ Get Data Section ] =======================================
+
+async function getFullWeatherDataByName(searchVal){
+    
+    let cityId = await searchForLocationByName(searchVal);
+    if(!cityIdIsValid(cityId)){
+        console.log("The id is undefined", cityId)
+        return;
     }
+    let cityObj = await getWeatherByCityId(cityId);
+    return cityObj;
+}
+
+async function getWeatherFromInput(inputVal){
+
+    let cityObj;
+   // - In case the search input is empty, display the current city in case geo location is enabled [ Location Access Allowed ]
+    
+   if(inputVal == "" && locationAccessAllowed){ 
+        cityObj = await getWeatherByLatAndLon(currentLatitude,currentLatitude);
+    }else if( inputVal == "" && !locationAccessAllowed ){
+    // - if Location Access Not Allowed, get our default location [ cairo ]
+        cityObj = await getFullWeatherDataByName(defaultLocation);
+    }       
+    else{
+    // if input is not empty, then try search for the city.
+        cityObj = await getFullWeatherDataByName(inputVal); 
+    }
+    console.log(cityObj)
+    return cityObj;
+}
+
+// * =================== [ Display Data Section ] =======================================
+
+function dispalyTodayAndFutureWX(cityObj){
+    hideLoader();
     dispalyTodayWX(cityObj);
     dispalyFutureDaysWX(cityObj);
 }
@@ -188,7 +245,7 @@ function dispalyTodayWX(cityObj){
    <div class="col-md-6">
         <ul class="list-unstyled today-wx-summary">
             <li>
-                <span>Feels Like </span> <span class="pe-2">${currentObj.feelslike_c} <sup>o </sup>C</span>
+                <span class="me-2"> Feels Like : </span> <span >${currentObj.feelslike_c} <sup>o </sup>C</span>
             </li>
             <li>
                 <ul class="list-unstyled d-flex flex-wrap">
@@ -197,7 +254,7 @@ function dispalyTodayWX(cityObj){
                         <span class="me-2">Max</span><span class="me-2">${forcastObj.day.maxtemp_c} <sup>o </sup>C </span>
                     </li>
                     <li>
-                        <i class="fa-solid fa-arrow-down me-2"></i><span class="me-2">Min</span>
+                        <i class="fa-solid fa-arrow-down me-2"></i><span class="me-2">Min : </span>
                         <span >${forcastObj.day.mintemp_c}<sup>o </sup>C </span>
                     </li>
                 </ul>
@@ -249,7 +306,7 @@ function dispalyFutureDaysWX(cityObj){
     - This function to display the Future N Days weather in the home page
     - This function accepts cityObj returned from forcast API
     */
-    console.log(cityObj);
+
     let forcastDaysList = cityObj.forecast.forecastday;
     let htmlBox = ``;
 
@@ -258,12 +315,11 @@ function dispalyFutureDaysWX(cityObj){
          //  we start from index one to skip today in forcast object 
          
          let forcastObj = forcastDaysList[i];
-         console.log(forcastObj);
          let dayObj = forcastObj.day;
          let date = new Date(forcastObj.date);
          htmlBox += `
          <div class="col-md-6">
-                  <div class="rounde rounded-2 weather-card ${ (i % 2 != 0 ? 'card-bg-dark':'card-bg-light')} text-center">
+                  <div class="shadow-sm rounde rounded-2 weather-card ${ (i % 2 != 0 ? 'card-bg-dark':'card-bg-light')} text-center">
                     <div class="rounde rounded-2 ${( i % 2 != 0 ? 'card-header-bg-dark':'card-header-bg-light')} py-1">
                       <p class="m-0">${getDayName(date)}</p>
                     </div>
@@ -291,13 +347,54 @@ function dispalyFutureDaysWX(cityObj){
 }
 
 
+//* ===================== [ Loading Section ] ============================================
+
+function hideWeatherSections(){
+    todayWeather.classList.remove("d-block");
+    futureDaysWx.classList.remove("row");
+    todayWeather.classList.add("d-none");
+    futureDaysWx.classList.add("d-none");
+
+}
+
+function showWeatherSections(){
+    todayWeather.classList.remove("d-none");
+    futureDaysWx.classList.remove("d-none");
+    todayWeather.classList.add("d-block");
+    futureDaysWx.classList.add("row");
+}
+
+
+function showLoader(){
+    // This function will show the loader and hide the Today & Future sections in home page until the data is returned from API endpoint
+    hideWeatherSections();
+    loader.classList.remove("d-none");
+    loader.classList.add("inline-block");
+    
+}
+
+function hideLoader(){
+    // This function will hide the loader and dispaly the Today & Future sections in home page when the data is returned from API endpoint
+    loader.classList.remove("inline-block");
+    loader.classList.add("d-none");
+    showWeatherSections();
+}
+
 // *===================== [ Events Settings ] =========================
 
-searchForm.addEventListener("submit",function(event){
-    event.preventDefault();
-    displayTodayAndFutureWX(searchInput.value);
+searchForm.addEventListener("submit",async function(event){
+    event.preventDefault(); // disable default behaviour of form submit
+    let cityObj = await getWeatherFromInput(searchInput.value);
+    if(cityIdIsValid(cityObj)){
+        dispalyTodayAndFutureWX(cityObj);
+    }
 });
 
 searchInput.addEventListener("input",async function(){
-   await displayTodayAndFutureWX(this.value)
+    let cityObj = await getWeatherFromInput(this.value);
+    if(cityIdIsValid(cityObj)){
+        dispalyTodayAndFutureWX(cityObj);
+    }
 });
+
+
