@@ -12,8 +12,11 @@
   <body class="vh-100">
 
     <nav class="navbar navbar-expand-lg py-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Weather</a>
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="../images/weather-logo.png" alt="Logo" class="d-inline-block w-25">
+          Weather
+      </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fa-solid fa-bars fs-5 text-white"></i>
         </button>
@@ -41,85 +44,34 @@
 
 
     <main>
+      <!-- ? “WX” is simply an abbreviation for the word “weather”  -->
       <section id="weather-section" class="py-5">
-        
         <div class="container-fluid search-section py-5">
           <form id="searchForm" class="w-50 mx-auto">
             <!-- TODO : apply prevent default -->
             <div class="input-wrapper position-relative mb-3">
               <input class="form-control py-3 rounded rounded-5" type="text" id="searchLocation" placeholder="Search for location">
-              <button class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Find</button>  
+              <button id="findBtn" class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Find</button>  
             </div>
           </form> 
         </div>
           <div class="weather-wrapper">
             <div class="container">   
-            <div id="todayWeather" class="bg-secondary rounded rounded-2">
-              <div class="weather-card container">
-                <div class="card-header mb-4 p-2 d-flex justify-content-between flex-wrap">
-                  <h2 class="">Today Weather</h2>
-                  
-                  <button class="btn btn-primary">To F</button>
-                  
+            <div id="todayWeather" class="rounded rounded-2 card-bg-light">
+              
+              <div id="todayWxCard">
+                <div id="todayWxCardHeader" class="rounded rounded-2 card-header-bg-light mb-2 pt-2 px-3 d-flex justify-content-between flex-wrap">
+               
                 </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <h5>City Name</h5>
-                      <p>Day Name</p>
-                      <p>Date</p>
-                    </div>
-                    <div class="col-md-4">
-                      <i>icon</i>
-                      <span>Degree</span>
-                      <p>status</p>
-                    </div>
-                    <div class="col-md-4">
-                      <ul class="list-unstyled">
-                        <li>
-                          <i>icon</i> <span>Humidity</span><span>73%</span>
-                        </li>
-                        <li>
-                          <i>icon</i> <span>Wind</span><span>180 kph</span>
-                        </li>
-                        <li>
-                          <i>icon</i> <span>Pressure</span><span>1014 hpa</span>
-                        </li>
-                      </ul>
-                    </div>
+                <div class="px-3">
+                  <div id="todayWxCardBody" class="row gx-0">
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="future-wheather mt-5">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="weather-card bg-dark-subtle text-center">
-                    <div class="card-header">
-                      <h3>Day Name</h3>
-                    </div>
-                    <div class="card-body">
-                      <i>icon</i>
-                      <h4>Max value</h4>
-                      <p>Mini value</p>
-                      <p>Status</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="weather-card bg-dark-subtle text-center">
-                    <div class="card-header">
-                      <h3>Day Name</h3>
-                    </div>
-                    <div class="card-body">
-                      <i>icon</i>
-                      <h4>Max value</h4>
-                      <p>Mini value</p>
-                      <p>Status</p>
-                    </div>
-                  </div>
-                </div>
+            <div class="future-days-wheather mt-5">
+              <div id="futureDaysWx" class="row gy-1">
               </div>
             </div>
           </div>
@@ -133,9 +85,10 @@
           <div class="row gx-0 gx-sm-4">
             <div class="col-md-6">
               <div class="input-wrapper position-relative mb-3">
-                <input class="form-control py-3 rounded rounded-5" type="text" id="searchLocation" placeholder="Enter Your Email To Subscribe">
-                <button class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Subscribe</button>  
-              </div>
+                <input type="email" class="form-control py-3 rounded rounded-5" id="searchLocation" placeholder="Enter Your Email To Subscribe">
+                <button
+                    class="btn btn-info text-white rounded rounded-5 position-absolute top-50 translate-middle-y end-0 mx-2">Subscribe</button>
+            </div>
             </div>
             <div class="col-md-6">
               <ul class="m-0 list-unstyled social-media d-flex justify-content-center align-items-center flex-wrap">
@@ -154,13 +107,11 @@
               </ul>
             </div>
           </div>
-          
-         
         </div>
        
       
       <div class="copyright text-white pt-3">
-        <p>Copyright 2024 Route. Designed by Ahmed Ashraf. All rights reserved</p>
+        <p class="secondary-txt">Copyright 2024 Route. Designed by Ahmed Ashraf. All rights reserved</p>
       </div>
     </div>
     </footer>

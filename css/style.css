@@ -5,6 +5,24 @@
     font-weight: 100;   
 }
 
+@font-face{
+    font-family: Poppins;
+    src: url("../webfonts/Poppins/Poppins-Regular.ttf");
+    font-weight: 400;   
+}
+
+@font-face{
+    font-family: Poppins;
+    src: url("../webfonts/Poppins/Poppins-Medium.ttf");
+    font-weight: 500;   
+}
+
+@font-face{
+    font-family: Poppins;
+    src: url("../webfonts/Poppins/Poppins-Bold.ttf");
+    font-weight: 700;   
+}
+
 /** ==================== Global ========================  */
 
 :root{
@@ -12,11 +30,52 @@
     --main-bg-color:#1e202b;
     --secondary-bg-color : #262936;
     --main-color:#009ad8;
-    --main-font-color:#fff;
-    --main-font-color-rgb:255, 255, 255;
-    --main-nav-active-color:#009ad8;
-    --main-nav-hover-color:#009ad8;
-    --main-nav-hover-color-rgb: 0, 154, 216;
+    --main-color-rgb: 0, 154, 216;
+    --main-txt-color:#fff;
+    --main-txt-color-rgb:255, 255, 255;
+    --secondary-txt-color : #bfc1c8;
+    --secondary-txt-color-rgb :191, 193, 200;
+    --main-cards-bg-color : #323544;
+    --main-cards-header-bg-color : #2D303D;
+    --secondary-cards-bg-color : #262936;
+    --secondary-cards-header-bg-color : #222530;
+
+}
+
+/** =================== Utilities ==========================  */
+
+.card-bg-light{
+    background-color: var(--main-cards-bg-color);
+}
+
+.card-header-bg-light{
+    background-color: var(--main-cards-header-bg-color);
+}
+
+.card-bg-dark{
+    background-color: var(--secondary-cards-bg-color);
+}
+
+.card-header-bg-dark{
+    background-color: var(--secondary-cards-header-bg-color);
+}
+
+.today-wx-icon{
+    width: 100px;
+    height:100px;
+}
+
+.future-wx-icon{
+    width: 80px;
+    height:80px;
+}
+
+.wx-condition-txt{
+    color:var(--main-color);
+}
+
+.secondary-txt{
+    color: var(--secondary-txt-color);
 }
 
 /** =================== General Setting ======================*/
@@ -31,7 +90,7 @@ body{
 }
 
 input[type="text"],input[type="email"],input[type="url"],textarea {
-    color: var(--main-font-color);
+    color: var(--main-txt-color);
     background: #1e202b;
 }
 
@@ -41,30 +100,34 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
 }
 
 .form-control:focus {
-    color: var(--main-font-color);
+    color: var(--main-txt-color);
     background-color: var(--main-bg-color);
     border-color: #86b7fe;
     outline: 0;
     box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
 }
 
-.footer label{
-    color: rgba(var(--main-font-color-rgb), .60);
+input::placeholder {
+    color: rgba(var(--main-txt-color-rgb), .60) !important;
+}
+  
+label{
+    color: rgba(var(--main-txt-color-rgb), .60);
 }
 
 /* * ========================= Navbar ========================= */
 
 .navbar-nav {
     --bs-nav-link-color: var(--bs-navbar-color);
-    --bs-nav-link-hover-color: var(--main-nav-hover-color);
+    --bs-nav-link-hover-color: var(--main-color);
 }
 
 .navbar-brand:focus, .navbar-brand:hover {
-    color: var(--main-font-color);
+    color: var(--main-txt-color);
 }
 
 .navbar a{
-    color: var(--main-font-color);
+    color: var(--main-txt-color);
 }
 
 .navbar-nav li a{
@@ -76,16 +139,16 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
 }
 
 .navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
-    color: var(--main-nav-hover-color);
-    border-color:var(--main-nav-hover-color);
+    color: var(--main-color);
+    border-color:var(--main-color);
 }
 
 .nav-link:focus{
-    color: var(--main-font-color);
+    color: var(--main-txt-color);
 }
 .nav-link:hover {
-    color: var(--main-nav-hover-color);
-    border-color:var(--main-nav-hover-color);
+    color: var(--main-color);
+    border-color:var(--main-color);
 }
 .navbar {
     --bs-navbar-toggler-icon-bg:unset;
@@ -97,7 +160,7 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
     line-height: 1;
     color: var(--bs-navbar-color);
     background-color: transparent;
-    border: var(--bs-border-width) solid var(--main-nav-hover-color);
+    border: var(--bs-border-width) solid var(--main-color);
     border-radius: var(--bs-navbar-toggler-border-radius);
     transition: var(--bs-navbar-toggler-transition);
 }
@@ -109,7 +172,7 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
 }
 
 
-/** ==========================   =======================================*/
+/** ========================== Home  =======================================*/
 
 .search-section{
     background: linear-gradient(346deg, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.3) 0%), url("../images/city.jpg");
@@ -120,6 +183,14 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
 .weather-wrapper{
     position: relative;
     top: -150px;
+}
+
+#todayWxCard,#futureDaysWx{
+    color:var(--main-txt-color);
+}
+
+.today-wx-summary li{
+    margin-bottom: 10px;
 }
 
 /** ========================= Footer ===================================== */
@@ -144,7 +215,7 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
         }
 
         &:hover{
-            color:var(--main-font-color);
+            color:var(--main-txt-color);
             background-color:var(--main-color);
         }
     }
@@ -169,7 +240,7 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
     margin-top: 1px;
     border-radius: 10px;
     height: 2px;
-    background-color: var(--main-font-color);
+    background-color: var(--main-txt-color);
     transition: all 0.3s;
 }
 
@@ -201,7 +272,7 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
 
 
 #contact-form label{
-    color: rgba(var(--main-font-color-rgb), .60);
+    color: rgba(var(--main-txt-color-rgb), .60);
 }
 
 .form-floating>.form-control-plaintext~label::after, .form-floating>.form-control:focus~label::after, .form-floating>.form-control:not(:placeholder-shown)~label::after, .form-floating>.form-select~label::after {
@@ -209,5 +280,5 @@ input[type="text"],input[type="email"],input[type="url"],textarea {
 }
 
 .form-floating>.form-control-plaintext~label, .form-floating>.form-control:focus~label, .form-floating>.form-control:not(:placeholder-shown)~label, .form-floating>.form-select~label {
-    color: rgba(var(--main-font-color-rgb), .60);
+    color: rgba(var(--main-txt-color-rgb), .60);
 }
