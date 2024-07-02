@@ -189,7 +189,6 @@ async function getWeatherByLatAndLon(lat,lon,numOfDays=3){
     if (!response.ok) { // if response is not OK, then show the error in the console & exit from function
         console.log(`Response status: ${response.statusText}`);
         return; // exit from function
-        //TODO:  if response from API not OK, don't procced and exit 
     }
 
     let cityObj =await response.json();
@@ -223,7 +222,6 @@ async function getWeatherByCityId(cid,numOfDays=3){
     if (!response.ok) { // if response is not OK, then show the error in the console & exit from function
         console.log(`Response status: ${response.statusText}`);
         return; // exit from function 
-        //TODO:  if response from API not OK, don't procced and exit 
     }
     
     let cityObj =await response.json();
