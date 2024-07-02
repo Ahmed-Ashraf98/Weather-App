@@ -466,6 +466,8 @@ searchForm.addEventListener("submit",async function(event){
     let cityObj = await searchHandler(searchInput.value); // determine which method we call to get the weather data
     if(cityIdIsValid(cityObj)){ // check if the returned object is valid ( not undefined )
         dispalyTodayAndFutureWX(cityObj); // update the home page with the weather data
+    }else{
+        alert("Sorry!, This city doesn't exist");
     }
 });
 
